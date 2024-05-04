@@ -2,8 +2,6 @@ package com.jcstres.todoapp
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import java.time.Instant
-import java.util.Date
 
 object TodoManager {
     private val todoList = mutableListOf<Todo>()
@@ -13,14 +11,22 @@ object TodoManager {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun addTodo(title: String){
-        todoList.add(Todo(System.currentTimeMillis().toInt(),title, Date.from(Instant.now())))
+    fun addTodo(title: String,date: String,description: String){
+        todoList.add(Todo(title, date,description))
     }
 
-    fun deleteTodo(id: Int){
+    fun deleteTodo(id: String){
         todoList.removeIf {
-            it.id == id
+            it.title == id
         }
+    }
+
+    fun editTitle(id: String, newTitle: String){
+        todoList.find{it.title == id}?.title = newTitle
+    }
+
+    fun editDescription(id: String, newDescription: String){
+        todoList.find {it.title == id }?.description = newDescription
     }
 
 }
